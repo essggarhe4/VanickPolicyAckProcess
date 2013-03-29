@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectItem Type="Microsoft.VisualStudio.SharePoint.VisualWebPart" DefaultFile="VanickPolicyApproveUserControl.ascx" SupportedTrustLevels="FullTrust" SupportedDeploymentScopes="Site" xmlns="http://schemas.microsoft.com/VisualStudio/2010/SharePointTools/SharePointProjectItemModel">
+  <Files>
+    <ProjectItemFile Source="Elements.xml" Target="VanickPolicyApprove\" Type="ElementManifest" />
+    <ProjectItemFile Source="VanickPolicyApprove.webpart" Target="VanickPolicyApprove\" Type="ElementFile" />
+    <ProjectItemFile Source="VanickPolicyApproveUserControl.ascx" Target="CONTROLTEMPLATES\VanickPolicyAckProcess.Webparts\VanickPolicyApprove\" Type="TemplateFile" />
+  </Files>
+  <SafeControls>
+    <SafeControl Name="SafeControlEntry1" Assembly="$SharePoint.Project.AssemblyFullName$" Namespace="VanickPolicyAckProcess.Webparts.VanickPolicyApprove" TypeName="*" IsSafe="true" IsSafeAgainstScript="false" />
+  </SafeControls>
+</ProjectItem>

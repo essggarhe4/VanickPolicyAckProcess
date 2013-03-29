@@ -1,0 +1,1 @@
+﻿<%@ WebService Class="VanickPolicyAckProcess.Services.CustomServices, VanickPolicyAckProcess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c8a9eb666796cce1" %>
