@@ -78,7 +78,9 @@ function vanickupdateItemVersionInit(itemvarid, listname) {
 }
 
 function vanickupdateItemVersion(item) {
-    var context = new SP.ClientContext.get_current();    
+    var context = new SP.ClientContext.get_current();
+    if (currentPageVersion == '')
+        currentPageVersion = '0';
     item.set_item("_Version", parseInt(currentPageVersion, 10) + 1);
     item.update();
     context.executeQueryAsync(Function.createDelegate(this, vanickupdateItemVersionsuccess), Function.createDelegate(this, vanickupdateItemVersionfailed));
@@ -136,10 +138,13 @@ function createListItem(status) {
     oList = oListColl.getByTitle(currentListApproval);
     listItemCreationInfo = new SP.ListItemCreationInformation();
     oListItem = oList.addItem(listItemCreationInfo);
-    oListItem.set_item('Title', status);
+    oListItem.set_item('Title', currentPageName);
+    oListItem.set_item('_Version', currentPageVersion);
+    oListItem.set_item('Category', currentPageCategory);
+    oListItem.set_item('Action', "Acknowledged policy");
     oListItem.set_item('Policy_x0020_Page_x0020_ID', currentPageID);
     //oListItem.set_item('Approve_x0020_Comments', $("#vanick-approve-control-input-text-comment").val());
-    oListItem.set_item('_Version', currentPageVersion);
+    
     
     //Approval User
     oListItem.update();

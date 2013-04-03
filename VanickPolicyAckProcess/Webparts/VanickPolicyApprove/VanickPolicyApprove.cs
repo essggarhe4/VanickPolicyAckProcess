@@ -6,6 +6,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using Microsoft.SharePoint;
 using Microsoft.SharePoint.WebControls;
+using VanickPolicyAckProcess.Data;
 
 namespace VanickPolicyAckProcess.Webparts.VanickPolicyApprove
 {
@@ -62,6 +63,9 @@ namespace VanickPolicyAckProcess.Webparts.VanickPolicyApprove
 
             Page.ClientScript.RegisterStartupScript(GetType(), "VanickPageCreator",
                    "<SCRIPT language='javascript' src='/_layouts/VanickPolicyAckProcess/JavaScript/PageCreator.js'></SCRIPT>", false);
+
+            ViewState[constants.ViewStateVariables.ApprovalPageList] = this.ApproveList;
+            ViewState[constants.ViewStateVariables.PageList] = this.PageList;
             base.OnPreRender(e);
         }
 

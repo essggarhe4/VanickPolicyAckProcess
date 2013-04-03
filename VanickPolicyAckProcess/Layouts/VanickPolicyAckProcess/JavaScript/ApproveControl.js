@@ -9,13 +9,13 @@ var currentListName;
 var currentListApproval;
 var currentPageVersion;
 var currentemailAuthor;
-var currentPageName = '';
-var currentPageCategory = '';
-var currentPageNotifyStatus = '';
+var currentPageName;
+var currentPageCategory;
+var currentPageNotifyStatus;
 var currentuserName;
 var isAgreeResponse = true;
 
-var isCorrectPage = false;
+var isCorrectPage;
 
 var notifyId = '';
 var currentmessageinitem = '';
@@ -51,7 +51,7 @@ function createApproveControls() {
             });            
         }        
     }
-    else {
+    else if (isPageApprover) {
         if (approvePageStatus == "Approved") {
             var currentIteminArray;
             var paintcolor = false;
@@ -117,15 +117,15 @@ function createApproveControls() {
         });
 
         Button_Agree.click(function () {
-            var inputComment = $("#vanick-approve-control-input-text-comment");
-            if (inputComment.val() != "" && inputComment.val() != undefined) {
-                SP.UI.ModalDialog.showWaitScreenWithNoClose('Loading...', 'Please wait..', 60, 270);
-                isAgreeResponse = true;
-                createListItem("Agree");
-            }
-            else {
-                alert("You need to insert a comment");
-            }            
+           // var inputComment = $("#vanick-approve-control-input-text-comment");
+           // if (inputComment.val() != "" && inputComment.val() != undefined) {
+            SP.UI.ModalDialog.showWaitScreenWithNoClose('Loading...', 'Please wait..', 60, 270);
+            isAgreeResponse = true;
+            createListItem("Agree");
+//            }
+//            else {
+//                alert("You need to insert a comment");
+//            }            
         });
 
         Button_No_Agree.click(function () {

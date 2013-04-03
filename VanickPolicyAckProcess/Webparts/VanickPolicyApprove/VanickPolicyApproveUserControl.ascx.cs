@@ -23,6 +23,8 @@ namespace VanickPolicyAckProcess.Webparts.VanickPolicyApprove
             //this.ApprovalGroup = "Approval group test";
             if (!string.IsNullOrEmpty(ApprovalList) && !string.IsNullOrEmpty(PageList))
             {
+                //ViewState[constants.ViewStateVariables.ApprovalPageList] = ApprovalList;
+                //ViewState[constants.ViewStateVariables.PageList] = PageList;
                 PageDataInit();
             }
             else
@@ -56,6 +58,10 @@ namespace VanickPolicyAckProcess.Webparts.VanickPolicyApprove
                         {
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "SetisCorrectPage", string.Format("<script>isCorrectPage = true;</script>"));
                         }
+                        else
+                        {
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "SetisCorrectPage", string.Format("<script>isCorrectPage = false;</script>"));
+                        }
 
                         ApproveData AD = new ApproveData(SPContext.Current.Site.ID, SPContext.Current.Web.ID, this.ApprovalList);
                         approveDataResult = AD.GetApprovalinformation(SPContext.Current.Item.ID.ToString());
@@ -77,7 +83,7 @@ namespace VanickPolicyAckProcess.Webparts.VanickPolicyApprove
                                 Page.ClientScript.RegisterStartupScript(this.GetType(), "SetcurrentPageCategory", string.Format("<script>currentPageCategory = '{0}';</script>", SPContext.Current.Item[constants.columns.PageList.PageCategory].ToString()));
 
                             if (SPContext.Current.Item.Fields.ContainsField(constants.columns.PageList.Version) && SPContext.Current.Item[constants.columns.PageList.Version] != null)
-                                Page.ClientScript.RegisterStartupScript(this.GetType(), "SetcurrentPageVersion", string.Format("<script>currentPageVersion = '{0}';</script>", SPContext.Current.Item[constants.columns.PageList.Version].ToString()));
+                                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetcurrentPageVersion", string.Format("<script type=\"text/javascript\">currentPageVersion = \"{0}\";</script>", SPContext.Current.Item[constants.columns.PageList.Version].ToString()));
 
                             if (SPContext.Current.Item.Fields.ContainsField(constants.columns.PageList.NotifyStatus) && SPContext.Current.Item[constants.columns.PageList.NotifyStatus] != null)
                                 Page.ClientScript.RegisterStartupScript(this.GetType(), "SetcurrentPageNotifyStatus", string.Format("<script>currentPageNotifyStatus = '{0}';</script>", SPContext.Current.Item[constants.columns.PageList.NotifyStatus].ToString()));
@@ -98,7 +104,8 @@ namespace VanickPolicyAckProcess.Webparts.VanickPolicyApprove
 
                             //if (((SPListItem)SPContext.Current.Item).ModerationInformation.Status == SPModerationStatusType.Pending)
                             //{
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "SetPageStatus", string.Format("<script>approvePageStatus = '{0}';</script>", ((SPListItem)SPContext.Current.Item).ModerationInformation.Status.ToString()));
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "SetPageStatus", string.Format("<script>approvePageStatus = '{0}';</script>", ((SPModerationStatusType)int.Parse(SPContext.Current.Item[constants.columns.PageList.ApprovalStatus].ToString()))));
+                            //Page.ClientScript.RegisterStartupScript(this.GetType(), "SetPageStatus", string.Format("<script>approvePageStatus = '{0}';</script>", ((SPListItem)SPContext.Current.Item).ModerationInformation.Status.ToString()));
                             //}
 
                             //Author = userValue.User.Name;
@@ -107,16 +114,59 @@ namespace VanickPolicyAckProcess.Webparts.VanickPolicyApprove
                                 //Is the Author                 
                                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetPageAuthor", "<script type='text/javascript'>isPageAuthor = true;</script>");
                             }
+                            else
+                            {
+                                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetPageAuthor", "<script type='text/javascript'>isPageAuthor = false;</script>");
+                                //Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetPageApprover", "<script>isPageApprover = false;</script>");
+                            }
+
+                            SPFieldUserValueCollection localSharePointGroup = null;
+                            if (SPContext.Current.Item[constants.columns.PageList.ApprovalGroup] != null)
+                            {
+                                localSharePointGroup = new SPFieldUserValueCollection(((SPListItem)SPContext.Current.Item).Web, SPContext.Current.Item[constants.columns.PageList.ApprovalGroup].ToString());
+                                if (localSharePointGroup[0].User == null)
+                                {
+                                    //is group
+                                    if (SPContext.Current.Web.Groups.GetByID(localSharePointGroup[0].LookupId) != null)
+                                    {
+                                        if (isUserinGroup(SPContext.Current.Site.ID, SPContext.Current.Web.ID, localSharePointGroup[0].LookupId, SPContext.Current.Web.CurrentUser))
+                                        {
+                                            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetPageApprover", "<script>isPageApprover = true;</script>");
+                                        }
+                                        else
+                                        {
+                                            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetPageApprover", "<script>isPageApprover = false;</script>");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetPageApprover", "<script>isPageApprover = false;</script>");
+                                    }
+                                }
+                                else
+                                {
+                                    if (localSharePointGroup[0].User.LoginName.Equals(SPContext.Current.Web.CurrentUser.LoginName))
+                                    {
+                                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetPageApprover", "<script>isPageApprover = true;</script>");
+                                    }
+                                    else
+                                    {
+                                        Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetPageApprover", "<script>isPageApprover = false;</script>");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetPageApprover", "<script>isPageApprover = true;</script>");
+                            }
+
+                            //SPGroup currentApprovalGroup = SPContext.Current.Web.SiteGroups[this.ApprovalGroup];
                             //else if (isUserinGroup(currentApprovalGroup, userValue.User))
                             //{
                             //    //Is the approval
                             //    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetPageApprover", "<script>isPageApprover = true;</script>");
                             //}
-                            else
-                            {
-                                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetPageAuthor", "<script type='text/javascript'>isPageAuthor = false;</script>");
-                                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetPageApprover", "<script>isPageApprover = false;</script>");
-                            }
+                            
                         }
                         //Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "ExeSetPageData", "SetPageData();", true);
 
@@ -146,23 +196,37 @@ namespace VanickPolicyAckProcess.Webparts.VanickPolicyApprove
 
         }
 
-        private bool isUserinGroup(SPGroup isgroup, SPUser oUser)
+        private bool isUserinGroup(Guid siteid, Guid webid, int groupid, SPUser oUser)
         {
             Boolean bUserIsInGroup = false;
-            SPSecurity.RunWithElevatedPrivileges(delegate()
+            try
             {
-                if (oUser != null)
+                SPSecurity.RunWithElevatedPrivileges(delegate()
                 {
-                    foreach (SPUser item in isgroup.Users)
+                    using (SPSite site = new SPSite(siteid))
                     {
-                        if (item.LoginName == oUser.LoginName)
+                        using (SPWeb web = site.OpenWeb(webid))
                         {
-                            bUserIsInGroup = true;
-                            break;
+                            SPGroup isgroup = web.Groups.GetByID(groupid);
+                            if (oUser != null)
+                            {
+                                foreach (SPUser item in isgroup.Users)
+                                {
+                                    if (item.LoginName == oUser.LoginName)
+                                    {
+                                        bUserIsInGroup = true;
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
-                }
-            });
+
+                });
+            }
+            catch
+            {
+            }
             return bUserIsInGroup;
         }        
     }

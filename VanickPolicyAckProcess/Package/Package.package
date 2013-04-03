@@ -2,6 +2,7 @@
 <package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="6d8da099-edfb-4c3b-a4b8-de439fb542f4" solutionId="6d8da099-edfb-4c3b-a4b8-de439fb542f4" resetWebServer="false" name="VanickPolicyAckProcess" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
   <features>
     <featureReference itemId="a308367e-de79-4d4a-b3d1-40d522306332" />
+    <featureReference itemId="0e1cd525-b085-4c61-8d81-14f282056693" />
   </features>
   <projectItems>
     <projectItemReference itemId="568ecfdf-5ff5-4f30-b66b-e413a397eb67" />
