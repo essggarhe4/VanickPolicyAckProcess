@@ -20,9 +20,10 @@ namespace VanickPolicyAckProcess.Data
         {            
             this.siteID = siteid;
             this.webID = webid;
+            GetApprovalinformation();
         }
 
-        public void GetApprovalinformation(string pageid)
+        public void GetApprovalinformation()
         {            
             SPSecurity.RunWithElevatedPrivileges(delegate()
             {
@@ -32,7 +33,7 @@ namespace VanickPolicyAckProcess.Data
                     {
                         if (web.Lists.TryGetList(constants.Lists.ConfigurationsList) != null)
                         {
-                            SPList configurationList = web.Lists[this.listName];
+                            SPList configurationList = web.Lists[constants.Lists.ConfigurationsList];
                             SPQuery listQuery = new SPQuery();
                             SPListItemCollection cgenericCollection = configurationList.GetItems(listQuery);
 

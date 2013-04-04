@@ -16,12 +16,13 @@ namespace VanickPolicyAckProcess.Webparts.VanickPendingPolicies
             //string ApprovalList = ViewState[constants.ViewStateVariables.ApprovalPageList].ToString();
             //string PageList = ViewState[constants.ViewStateVariables.PageList].ToString();
 
-            string ApprovalList = "Policy Approval";
-            string PageList = "Pages";
-            if (!string.IsNullOrEmpty(ApprovalList) && !string.IsNullOrEmpty(PageList))
+            //string ApprovalList = "Policy Approval";
+            //string PageList = "Pages";
+            Configuration config = new Configuration(SPContext.Current.Site.ID, SPContext.Current.Web.ID);
+            if (!string.IsNullOrEmpty(config.APPROVAL_LIST) && !string.IsNullOrEmpty(config.PAGE_NAME))
             {
-                GetPendingPolicies(PageList, ApprovalList);
-            }
+                GetPendingPolicies(config.PAGE_NAME, config.APPROVAL_LIST);
+            }            
             else
             {
                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "ErrorMessagec", string.Format("<script>alert('You need to configure the webpart');</script>"));

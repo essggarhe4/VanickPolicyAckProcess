@@ -15,6 +15,8 @@ var currentPageNotifyStatus;
 var currentuserName;
 var isAgreeResponse = true;
 
+var currentsiteurl;
+
 var isCorrectPage;
 
 var notifyId = '';
@@ -25,11 +27,11 @@ $(document).ready(function () {
 });
 
 function SetPageData() {
-    //if (isCorrectPage) {
+    if (isCorrectPage) {
         var tmpjson = JSON.stringify(ApprovePageData)
         ApprovePagelog = JSON.parse(tmpjson); ;
         createApproveControls();
-    //}
+    }
 }
 
 function createApproveControls() {
@@ -54,7 +56,7 @@ function createApproveControls() {
     else if (isPageApprover) {
         if (approvePageStatus == "Approved") {
             var currentIteminArray;
-            var paintcolor = false;
+            var paintcolor = true;
             if (ApprovePagelog.length > 0) {
                 var orderpage = ApprovePagelog.sort(function (a, b) {
                     if (a.Version < b.Version)
@@ -66,13 +68,13 @@ function createApproveControls() {
                 currentIteminArray = orderpage[orderpage.length - 1];
                 var lastversion = currentIteminArray.Version;
                 currentmessageinitem = currentIteminArray.Comments;
-                if (currentPageVersion == lastversion) {
+//                if (currentPageVersion == lastversion) {
                     $("#s4-workspace").prepend(createHTMLApproveControl("User-Approved-Agree"));
-                    paintcolor = true;                  
-                }
-                else {
-                    $("#s4-workspace").prepend(createHTMLApproveControl("User-Approved-new-version"));
-                }                
+//                    paintcolor = true;                  
+//                }
+//                else {
+//                    $("#s4-workspace").prepend(createHTMLApproveControl("User-Approved-new-version"));
+//                }                
             }
             else {
                 $("#s4-workspace").prepend(createHTMLApproveControl("User-Approved"));
@@ -82,12 +84,12 @@ function createApproveControls() {
                 selected: -2
             });
             if (paintcolor) {
-                if (currentIteminArray != undefined && currentIteminArray.Status == "Agree") {
+                //if (currentIteminArray != undefined && currentIteminArray.Status == "Agree") {
                     $("ul.ui-widget-header").css('background-color', 'green');
-                }
-                else {
-                    $("ul.ui-widget-header").css('background-color', 'red');
-                }
+                //}
+                //else {
+                //    $("ul.ui-widget-header").css('background-color', 'red');
+               // }
             }
         }        
     }
@@ -159,7 +161,7 @@ function createApproveControls() {
                 //Approvebuttons += '<li><a id="vanick-approve-control-button-no-agree" class="ui-tabs-anchor">Do not Agree</a></li>';
                 //Approvebuttons += '<li><input id="vanick-approve-control-input-text-comment" class="ui-tabs-anchor" type="text" name="textComment"/></li>';
                 break;
-            case "User-Approved-Agree": Approvebuttons += '<li><span class="ui-tabs-anchor">Comments: ' + currentmessageinitem + '</span></li>';
+            case "User-Approved-Agree": Approvebuttons += '<li><span class="ui-tabs-anchor">Acknowledge the policy ' + currentmessageinitem + '</span></li>';
                 //Approvebuttons += '<li><span class="ui-tabs-anchor">Message</span></li>';                
                 break;
         }

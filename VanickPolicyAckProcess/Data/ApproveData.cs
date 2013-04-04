@@ -32,6 +32,45 @@ namespace VanickPolicyAckProcess.Data
             this.approveList = approvelist;
         }
 
+        public string GetEmailByPage(string pageid)
+        {
+            string result = string.Empty;
+            SPSecurity.RunWithElevatedPrivileges(delegate()
+            {
+                using (SPSite site = new SPSite(this.siteID))
+                {
+                    using (SPWeb web = site.OpenWeb(this.webID))
+                    {
+                        if (web.Lists.TryGetList(this.listName) != null)
+                        {
+                            SPList PageList = web.Lists[this.listName];
+
+                            SPListItem PageItem = PageList.GetItemById(int.Parse(pageid));
+                            SPFieldUserValueCollection localSharePointGroup = null;
+                            if (PageItem[constants.columns.PageList.ApprovalGroup] != null)
+                            {
+                                localSharePointGroup = new SPFieldUserValueCollection(((SPListItem)PageItem).Web, PageItem[constants.columns.PageList.ApprovalGroup].ToString());
+                                if (localSharePointGroup[0].User == null)
+                                {
+                                    //is group
+                                    result = GetEmailsFromGroup(SPContext.Current.Site.ID, 
+                                                                SPContext.Current.Web.ID, 
+                                                                localSharePointGroup[0].LookupId, 
+                                                                SPContext.Current.Web.CurrentUser);                                    
+                                }
+                            }
+                            else
+                            {
+                                //This list doesn't exist
+                                this.ApproveMessageError = "The list doesn't exist";
+                            }
+                        }   
+                    }
+                }
+            });
+            return result;
+        }
+
         public List<DataPage> GetApprovalinformation(string pageid)
         {
             List<DataPage> datapageList = new List<DataPage>();
@@ -392,6 +431,39 @@ namespace VanickPolicyAckProcess.Data
             {
             }
             return bUserIsInGroup;
+        }
+
+        private string GetEmailsFromGroup(Guid siteid, Guid webid, int groupid, SPUser oUser)
+        {
+            string ResultEmail = string.Empty;
+            try
+            {
+                SPSecurity.RunWithElevatedPrivileges(delegate()
+                {
+                    using (SPSite site = new SPSite(siteid))
+                    {
+                        using (SPWeb web = site.OpenWeb(webid))
+                        {
+                            SPGroup isgroup = web.Groups.GetByID(groupid);
+                            if (oUser != null)
+                            {
+                                foreach (SPUser item in isgroup.Users)
+                                {
+                                    if(string.IsNullOrEmpty(ResultEmail))
+                                        ResultEmail = item.Email;
+                                    else
+                                        ResultEmail += string.Format(";{0}", item.Email);
+                                }
+                            }
+                        }
+                    }
+
+                });
+            }
+            catch
+            {
+            }
+            return ResultEmail;
         }
 
         private List<SPUser> GetUsersInGroup(Guid siteid, Guid webid, int groupid)

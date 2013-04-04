@@ -1,0 +1,108 @@
+﻿#page-header-wrapper
+{
+	background-attachment: fixed;
+    background-color: #E03A3E;
+    /*background-image: url("/assets/extra_clean_paper.png");*/
+    background-position: center center;
+    background-repeat: repeat;
+    background-size: auto auto;
+}
+
+#banner-area
+{
+	text-align: center;
+	max-width: 1130px;
+	width: auto;
+	height: auto;
+	padding-bottom: 22px;
+	padding-top: 22px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#banner-area img
+{
+	height: 89px;
+	width: auto;
+	margin-bottom: 24px;
+	max-width: 100%;
+}
+
+/*Menu*/
+
+#VanickNavigation
+{
+	display: inline-block;
+	width: 100%;
+	border-bottom: 1px solid #E6E6E6;
+	background-color: #FFFFFF;	
+	margin-bottom: -4px;
+	
+}
+
+#VanickNavigation>div
+{
+	display: block;
+	width:100%;
+}
+
+
+#VanickNavigation .dynamic-menu-root
+{
+	display: table;
+	margin: auto;
+	padding: 15px 0;
+}
+#VanickNavigation .dynamic-menu
+{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+
+#VanickNavigation .dynamic-menu-root li a, 
+#VanickNavigation .dynamic-menu-root li a:link
+{
+	padding: 0px;
+}
+
+#VanickNavigation .dynamic-menu-root li:hover, 
+#VanickNavigation .menu-item-li.dynamic-menu-selected
+{
+	background-color: transparent !important;
+	box-shadow: none !important;
+	color:#E03A3E !important;
+}
+
+#VanickNavigation .dynamic-menu-root li a, 
+#VanickNavigation .dynamic-menu-root li a:link
+{
+	font-family: "Muli";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    font-family: "Muli";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+#VanickNavigation .menu-item-li:hover a:link, 
+#VanickNavigation .menu-item-li:hover a, 
+#VanickNavigation .menu-item-li.dynamic-menu-selected a:link, 
+#VanickNavigation .menu-item-li.dynamic-menu-selected a
+{
+	color: #E03A3E !important;
+}
+
+#VanickNavigation .sub-menu-item-ul
+{
+	background-color: transparent;
+	top: 0;
+}
+

@@ -79,7 +79,7 @@ function vanickupdateItemVersionInit(itemvarid, listname) {
 
 function vanickupdateItemVersion(item) {
     var context = new SP.ClientContext.get_current();
-    if (currentPageVersion == '')
+    if (currentPageVersion == '' || currentPageVersion == undefined)
         currentPageVersion = '0';
     item.set_item("_Version", parseInt(currentPageVersion, 10) + 1);
     item.update();
@@ -121,11 +121,17 @@ function vanickupdateItem(item) {
 
 function vanickupdateItemsuccess(sender, args) {
     //alert('si');
-    location.reload();
+    if (currentPageNotifyStatus) {
+        SendNotificationEmail();
+    }
+    else {
+        location.reload();
+    }
 }
 
 function vanickupdateItemfailed(sender, args) {
     alert('failed. Message:' + args.get_message());
+    location.reload();
 }
 
 
@@ -140,7 +146,7 @@ function createListItem(status) {
     oListItem = oList.addItem(listItemCreationInfo);
     oListItem.set_item('Title', currentPageName);
     oListItem.set_item('_Version', currentPageVersion);
-    oListItem.set_item('Category', currentPageCategory);
+    oListItem.set_item('_Category', currentPageCategory);
     oListItem.set_item('Action', "Acknowledged policy");
     oListItem.set_item('Policy_x0020_Page_x0020_ID', currentPageID);
     //oListItem.set_item('Approve_x0020_Comments', $("#vanick-approve-control-input-text-comment").val());
@@ -155,9 +161,9 @@ function createListItem(status) {
 function onQuerySucceeded() {
     //alert(oListItem.get_title() + ' item is created successfully.');
     //location.reload();
-    if(!isAgreeResponse)
-        SendNoAgreeEmail();
-    else
+    //if(!isAgreeResponse)
+    //    SendNoAgreeEmail();
+    //else
         location.reload();
 }
 
@@ -167,6 +173,24 @@ function onQueryFailed(sender, args) {
 }
 
 //----------------------SEND EMAIL----------------------
+
+function SendNotificationEmail() {    
+    $.ajax({
+        type: "POST",
+        url: currentsiteurl + "/_layouts/VanickPolicyAckProcess/Service/Service.asmx/SendEmail",
+        data: "{ 'PageID': '" + currentPageID + "', 'PageName': '" + currentPageName + "', 'PageURL': '" + currentPageURL + "'}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            //consolg.log(msg);
+            location.reload();
+        },
+        error: function (msgerro) {
+            //console.log(msgerri);
+            location.reload();
+        }
+    });
+}
 
 function SendNoAgreeEmail() {
     var message = "The user " + currentuserName + " has rejected the page " + currentPageName;

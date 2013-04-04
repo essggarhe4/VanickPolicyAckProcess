@@ -86,7 +86,7 @@ namespace VanickPolicyAckProcess.Webparts.VanickPolicyApprove
                                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SetcurrentPageVersion", string.Format("<script type=\"text/javascript\">currentPageVersion = \"{0}\";</script>", SPContext.Current.Item[constants.columns.PageList.Version].ToString()));
 
                             if (SPContext.Current.Item.Fields.ContainsField(constants.columns.PageList.NotifyStatus) && SPContext.Current.Item[constants.columns.PageList.NotifyStatus] != null)
-                                Page.ClientScript.RegisterStartupScript(this.GetType(), "SetcurrentPageNotifyStatus", string.Format("<script>currentPageNotifyStatus = '{0}';</script>", SPContext.Current.Item[constants.columns.PageList.NotifyStatus].ToString()));
+                                Page.ClientScript.RegisterStartupScript(this.GetType(), "SetcurrentPageNotifyStatus", string.Format("<script>currentPageNotifyStatus = {0};</script>", SPContext.Current.Item[constants.columns.PageList.NotifyStatus].ToString().ToLower()));
 
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "SetUserName", string.Format("<script>currentuserName = '{0}';</script>", cuser.Name));
                             //currentemailAuthor    currentuserName
@@ -97,7 +97,9 @@ namespace VanickPolicyAckProcess.Webparts.VanickPolicyApprove
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "SetListPage", string.Format("<script>currentListName = '{0}';</script>", this.PageList));
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "SetListApproval", string.Format("<script>currentListApproval = '{0}';</script>", this.ApprovalList));
 
-                            
+
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "Setcurrentsiteurl", string.Format("<script>currentsiteurl = '{0}';</script>", SPContext.Current.Web.Url));                            
+
 
 
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "SetApprovePageData", string.Format("<script>ApprovePageData = {0};</script>", new JavaScriptSerializer().Serialize(approveDataResult)));
