@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.SharePoint;
+using System.Globalization;
 
 namespace VanickPolicyAckProcess.Data
 {
@@ -87,42 +88,55 @@ namespace VanickPolicyAckProcess.Data
                             {
                                 SPQuery listQuery = new SPQuery();
                                 //listQuery.Query = string.Format("<Where><Eq><FieldRef Name='Approve_x0020_Page_x0020_ID' /><Value Type='Number'>{0}</Value></Eq></Where>", pageid);
-                                listQuery.Query = string.Format("<Query><Where><And><Eq><FieldRef Name='Approve_x0020_Page_x0020_ID' /><Value Type='Number'>{0}</Value></Eq><Eq><FieldRef Name='Author' LookupId=’TRUE’/><Value Type=’Integer’><UserID/></Value></Eq></And></Where></Query>", pageid);
+                                //listQuery.Query = string.Format("<Where><And><Eq><FieldRef Name='Policy_x0020_Page_x0020_ID' /><Value Type='Text'>{0}</Value></Eq><Eq><FieldRef Name='Author' LookupId='TRUE'/><Value Type='Integer'><UserID/></Value></Eq></And></Where>", pageid);
+                                listQuery.Query = string.Format("<Where><Eq><FieldRef Name='Policy_x0020_Page_x0020_ID' /><Value Type='Text'>{0}</Value></Eq></Where>", pageid);
+
 
                                 SPListItemCollection cgenericCollection = apporoveList.GetItems(listQuery);
+
+                                string cuserln = SPContext.Current.Web.CurrentUser.ID.ToString();
+
                                 foreach (SPListItem approveItem in cgenericCollection)
                                 {
-                                    string ApprovalStatus = string.Empty;
-                                    string ApproveComments = string.Empty;
-                                    string ApprovePageID = string.Empty;
-                                    int Version = 0;
-
-                                    if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.Title) && approveItem[constants.columns.ApprovalList.Title] != null)
+                                    
+                                    if (approveItem["Author"].ToString().Split(';')[0].Equals(cuserln))
                                     {
-                                        ApprovalStatus = approveItem[constants.columns.ApprovalList.Title].ToString();
+                                        string ApprovalStatus = string.Empty;
+                                        string ApproveComments = string.Empty;
+                                        string ApprovePageID = string.Empty;
+                                        int Version = 0;
+
+                                        if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.Title) && approveItem[constants.columns.ApprovalList.Title] != null)
+                                        {
+                                            ApprovalStatus = approveItem[constants.columns.ApprovalList.Title].ToString();
+                                        }
+
+                                        if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.ApproveComments) && approveItem[constants.columns.ApprovalList.ApproveComments] != null)
+                                        {
+                                            ApproveComments = approveItem[constants.columns.ApprovalList.ApproveComments].ToString();
+                                        }
+
+                                        if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.ApprovePageID) && approveItem[constants.columns.ApprovalList.ApprovePageID] != null)
+                                        {
+                                            ApprovePageID = approveItem[constants.columns.ApprovalList.ApprovePageID].ToString();
+                                        }
+
+                                        if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.Version) && approveItem[constants.columns.ApprovalList.Version] != null)
+                                        {
+                                            Version = int.Parse(approveItem[constants.columns.ApprovalList.Version].ToString());
+                                        }
+
+
+
+
+                                        datapageList.Add(new DataPage
+                                        {
+                                            Status = ApprovalStatus,
+                                            Comments = ApproveComments,
+                                            Version = Version,
+                                            DateCreated = ((DateTime)approveItem[SPBuiltInFieldId.Created]).ToString("f", DateTimeFormatInfo.InvariantInfo)
+                                        });
                                     }
-
-                                    if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.ApproveComments) && approveItem[constants.columns.ApprovalList.ApproveComments] != null)
-                                    {
-                                        ApproveComments = approveItem[constants.columns.ApprovalList.ApproveComments].ToString();
-                                    }
-
-                                    if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.ApprovePageID) && approveItem[constants.columns.ApprovalList.ApprovePageID] != null)
-                                    {
-                                        ApprovePageID = approveItem[constants.columns.ApprovalList.ApprovePageID].ToString();
-                                    }
-
-                                    if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.Version) && approveItem[constants.columns.ApprovalList.Version] != null)
-                                    {
-                                        Version = int.Parse(approveItem[constants.columns.ApprovalList.Version].ToString());
-                                    }
-
-                                    datapageList.Add(new DataPage
-                                    {
-                                        Status = ApprovalStatus,
-                                        Comments = ApproveComments,
-                                        Version = Version
-                                    });
                                 }
                             }
                             else
@@ -214,49 +228,54 @@ namespace VanickPolicyAckProcess.Data
                             {
                                 SPQuery listQuery = new SPQuery();
                                 //listQuery.Query = string.Format("<Where><Eq><FieldRef Name='Approve_x0020_Page_x0020_ID' /><Value Type='Number'>{0}</Value></Eq></Where>", pageid);
-                                listQuery.Query = string.Format("<Query><Where><Eq><FieldRef Name='Author' LookupId=’TRUE’/><Value Type=’Integer’><UserID/></Value></Eq></Where></Query>");
+                                //listQuery.Query = string.Format("<Query><Where><Eq><FieldRef Name='Author' LookupId=’TRUE’/><Value Type=’Integer’><UserID/></Value></Eq></Where></Query>");
 
                                 SPListItemCollection cgenericCollection = apporoveList.GetItems(listQuery);
+                                string cuserln = SPContext.Current.Web.CurrentUser.ID.ToString();
                                 foreach (SPListItem approveItem in cgenericCollection)
                                 {
                                     string PageName = string.Empty;
-                                    string PageVersion = string.Empty;
-                                    string PageCategory = string.Empty;
-                                    string PageID = string.Empty;                                    
-
-                                    if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.Title) && approveItem[constants.columns.ApprovalList.Title] != null)
+                                    if (approveItem["Author"].ToString().Split(';')[0].Equals(cuserln))
                                     {
-                                        PageName = approveItem[constants.columns.ApprovalList.Title].ToString();
+                                        string PageVersion = string.Empty;
+                                        string PageCategory = string.Empty;
+                                        string PageID = string.Empty;
+
+                                        if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.Title) && approveItem[constants.columns.ApprovalList.Title] != null)
+                                        {
+                                            PageName = approveItem[constants.columns.ApprovalList.Title].ToString();
+                                        }
+
+                                        if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.Version) && approveItem[constants.columns.ApprovalList.Version] != null)
+                                        {
+                                            PageVersion = approveItem[constants.columns.ApprovalList.Version].ToString();
+                                        }
+
+                                        if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.ApprovePageID) && approveItem[constants.columns.ApprovalList.ApprovePageID] != null)
+                                        {
+                                            PageCategory = approveItem[constants.columns.ApprovalList.PageCategory].ToString();
+                                        }
+
+                                        if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.ApprovePageID) && approveItem[constants.columns.ApprovalList.ApprovePageID] != null)
+                                        {
+                                            PageID = approveItem[constants.columns.ApprovalList.ApprovePageID].ToString();
+                                        }
+
+                                        dataapproveList.Add(new DataApprove
+                                        {
+                                            PageName = PageName,
+                                            PageID = PageID,
+                                            Version = PageVersion,
+                                            Category = PageCategory
+                                        });
                                     }
-
-                                    if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.ApproveComments) && approveItem[constants.columns.ApprovalList.ApproveComments] != null)
-                                    {
-                                        PageVersion = approveItem[constants.columns.ApprovalList.Version].ToString();
-                                    }
-
-                                    if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.ApprovePageID) && approveItem[constants.columns.ApprovalList.ApprovePageID] != null)
-                                    {
-                                        PageCategory = approveItem[constants.columns.ApprovalList.PageCategory].ToString();
-                                    }
-
-                                    if (approveItem.Fields.ContainsField(constants.columns.ApprovalList.Version) && approveItem[constants.columns.ApprovalList.Version] != null)
-                                    {
-                                        PageID = approveItem.ID.ToString();
-                                    }
-
-                                    dataapproveList.Add(new DataApprove
-                                    {
-                                        PageName = PageName,
-                                        PageID = PageID,
-                                        Version = PageVersion,
-                                        Category = PageCategory
-                                    });
                                 }
 
                                 //get all pages          
                                 foreach (DataPublishPage DPP in dataPublishPageList)
                                 {
-                                    if (dataapproveList.Count(ap => ap.PageID == DPP.PageID && ap.Version == DPP.PageVersion) <= 0)
+                                    int approveCount = dataapproveList.Count(ap => ap.PageID == DPP.PageID && ap.Version == DPP.PageVersion);
+                                    if ( approveCount <= 0)
                                     {
                                         ResultdataPublishPageList.Add(DPP);
                                     }

@@ -59,7 +59,7 @@ namespace VanickPolicyAckProcess.Webparts.VanickPendingPolicies
             foreach (string categ in categoriesList)
             {
                 List<DataPublishPage> pendingpages = approveDataResult.FindAll(pa => pa.PageCategory == categ);
-                htmlAccordion.Append(string.Format("<h3>{0}</h3>",categ));
+                htmlAccordion.Append(string.Format("<h3>{0} ({1})</h3>",categ, pendingpages.Count));
                 htmlAccordion.Append("<div>");
                 htmlAccordion.Append("<ul>");
                 foreach (DataPublishPage rr in pendingpages)

@@ -30,6 +30,17 @@ body #s4-bodyContainer
     width: 100%;
 }
 
+#vanicktabs a:link,
+#vanicktabs a
+{
+    color: #ffffff !important;
+}
+
+#vanicktabs ui-tabs-anchor
+{
+    color: #ffffff;
+}
+
 .vanick-approve-control-message
 {
     float: right;

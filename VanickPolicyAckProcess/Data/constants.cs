@@ -13,7 +13,7 @@ namespace VanickPolicyAckProcess.Data
             {
                 public const string ApprovalUser = "Approval User";
                 public const string ApproveComments = "Approve Comments";
-                public const string ApprovePageID = "Approve Page ID";
+                public const string ApprovePageID = "Policy Page ID";
                 public const string Version = "Version";
                 public const string Title = "Title";
                 public const string PageCategory = "Category";                
@@ -27,7 +27,8 @@ namespace VanickPolicyAckProcess.Data
                 public const string NotifyStatus = "Notify Status";
                 public const string ApprovalGroup = "Approval Group";
                 public const string PolicySupervisor = "Policy Supervisor";
-                public const string ApprovalStatus = "Approval Status";                
+                public const string ApprovalStatus = "Approval Status";
+                public const string SLA = "SLA";    
             }
 
             public class ConfigurationList

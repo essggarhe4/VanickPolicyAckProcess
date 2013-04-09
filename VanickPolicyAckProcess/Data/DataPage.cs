@@ -9,6 +9,7 @@ namespace VanickPolicyAckProcess.Data
     {
         public string Status { set; get; }
         public string Comments { set; get; }
-        public int Version { set; get; }        
+        public int Version { set; get; }
+        public string DateCreated { set; get; }
     }
 }
