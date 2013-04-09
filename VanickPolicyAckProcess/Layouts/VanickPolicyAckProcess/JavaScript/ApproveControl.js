@@ -154,8 +154,8 @@ function createApproveControls() {
     function createHistory(controlMode) {
 
         var setcurrentPageSLA = '';
-        if (currentPageSLA)
-            setcurrentPageSLA = 'Due by- SLA date';
+        if (currentPageSLA != '' && currentPageSLA != undefined)
+            setcurrentPageSLA = currentPageSLA;
 
         var Approvebuttons = "";
         switch (controlMode) {

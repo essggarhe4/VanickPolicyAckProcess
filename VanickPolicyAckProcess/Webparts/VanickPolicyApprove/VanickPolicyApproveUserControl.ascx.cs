@@ -89,9 +89,9 @@ namespace VanickPolicyAckProcess.Webparts.VanickPolicyApprove
                                 Page.ClientScript.RegisterStartupScript(this.GetType(), "SetcurrentPageNotifyStatus", string.Format("<script>currentPageNotifyStatus = {0};</script>", SPContext.Current.Item[constants.columns.PageList.NotifyStatus].ToString().ToLower()));
 
                             if (SPContext.Current.Item.Fields.ContainsField(constants.columns.PageList.SLA) && SPContext.Current.Item[constants.columns.PageList.SLA] != null)
-                                Page.ClientScript.RegisterStartupScript(this.GetType(), "SetcurrentPageSLA", string.Format("<script>currentPageSLA = {0};</script>", "true"));
+                                Page.ClientScript.RegisterStartupScript(this.GetType(), "SetcurrentPageSLA", string.Format("<script>currentPageSLA = 'Due by {0}';</script>", ((DateTime)SPContext.Current.Item[constants.columns.PageList.SLA]).ToString("f")));
                             else
-                                Page.ClientScript.RegisterStartupScript(this.GetType(), "SetcurrentPageSLA", string.Format("<script>currentPageSLA = {0};</script>", "false"));
+                                Page.ClientScript.RegisterStartupScript(this.GetType(), "SetcurrentPageSLA", string.Format("<script>currentPageSLA = '{0}';</script>", ""));
 
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "SetUserName", string.Format("<script>currentuserName = '{0}';</script>", cuser.Name));
                             //currentemailAuthor    currentuserName
