@@ -16,6 +16,8 @@ namespace VanickPolicyAckProcess.Data
 
         public string ApproveMessageError { get; set; }
 
+        public List<DataPublishPage> ResultdataApprovgedPages {set; get;}
+
         public ApproveData(Guid siteid, Guid webid, string listname)
         {
             this.ApproveMessageError = string.Empty;
@@ -161,6 +163,7 @@ namespace VanickPolicyAckProcess.Data
             List<DataApprove> dataapproveList = new List<DataApprove>();
             List<DataPublishPage> dataPublishPageList = new List<DataPublishPage>();
             List<DataPublishPage> ResultdataPublishPageList = new List<DataPublishPage>();
+            ResultdataApprovgedPages = new List<DataPublishPage>();
             SPSecurity.RunWithElevatedPrivileges(delegate()
             {
                 using (SPSite site = new SPSite(this.siteID))
@@ -278,6 +281,10 @@ namespace VanickPolicyAckProcess.Data
                                     if ( approveCount <= 0)
                                     {
                                         ResultdataPublishPageList.Add(DPP);
+                                    }
+                                    else
+                                    {
+                                        ResultdataApprovgedPages.Add(DPP);
                                     }
                                 }
                                 int dd = ResultdataPublishPageList.Count;

@@ -7,6 +7,16 @@
 <%@ Register Tagprefix="WebPartPages" Namespace="Microsoft.SharePoint.WebPartPages" Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="VanickPendingPoliciesUserControl.ascx.cs" Inherits="VanickPolicyAckProcess.Webparts.VanickPendingPolicies.VanickPendingPoliciesUserControl" %>
 
-<div>
-    <asp:Literal ID="LitaralPage" runat="server"></asp:Literal>
+
+<div id="vanicktabspending">
+    <ul>
+        <li><a href="#vanicktabspending-pending">Pending</a></li>
+        <li><a href="#vanicktabspending-approved">Approved</a></li>
+    </ul>
+    <div id="vanicktabspending-pending">
+        <asp:Literal ID="LitaralPage" runat="server"></asp:Literal>
+    </div>
+    <div id="vanicktabspending-approved">
+       <asp:Literal ID="LiteralApprovePages" runat="server"></asp:Literal>
+    </div>    
 </div>

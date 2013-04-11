@@ -48,6 +48,12 @@ namespace VanickPolicyAckProcess.Webparts.VanickPolicyApprove
 
         private void GetPageData()
         {
+            Configuration coni = new Configuration(SPContext.Current.Site.ID, SPContext.Current.Web.ID);
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "SetLABELPUBLISH", string.Format("<script>LABELPUBLISH = '{0}';</script>", coni.PUBLISH_LABEL_APPROVE));
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "SetLABELPUBLISHNOAPPROVE", string.Format("<script>LABELPUBLISHNOAPPROVE = '{0}';</script>", coni.PUBLISH_LABEL_NO_APPROVE));
+            
+            
+
             if (SPContext.Current != null)
             {
                 if (SPContext.Current.List != null && SPContext.Current.List.Title.ToString().Equals(this.PageList))

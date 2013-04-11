@@ -32,8 +32,11 @@ namespace VanickPolicyAckProcess.Webparts.VanickPendingPolicies
         private void GetPendingPolicies(string PageList, string ApprovalList)
         {
             List<DataPublishPage> approveDataResult = new List<DataPublishPage>();
+            List<DataPublishPage> ResultApprovePolicies = new List<DataPublishPage>();
+
             ApproveData AD = new ApproveData(SPContext.Current.Site.ID, SPContext.Current.Web.ID, PageList, ApprovalList);
             approveDataResult = AD.GetApprovalinformationByUser();
+            ResultApprovePolicies = AD.ResultdataApprovgedPages;
 
             List<string> categoriesList = new List<string>();
 
@@ -72,6 +75,44 @@ namespace VanickPolicyAckProcess.Webparts.VanickPendingPolicies
             htmlAccordion.Append("</div>");
 
             LitaralPage.Text = htmlAccordion.ToString();
+
+            //For approve pages
+            List<string> categoriesListApprove = new List<string>();
+
+            foreach (DataPublishPage DTP in ResultApprovePolicies)
+            {
+                if (categoriesListApprove.IndexOf(DTP.PageCategory) == -1)
+                    categoriesListApprove.Add(DTP.PageCategory);
+            }
+
+            StringBuilder htmlAccordionApprove = new StringBuilder();
+            htmlAccordionApprove.Append("<div id='PolicyApproveAccordion'>");
+
+            if (categoriesListApprove.Count == 0)
+            {
+                htmlAccordionApprove.Append(string.Format("<h3>{0}</h3>", "No Approve policies"));
+                htmlAccordionApprove.Append("<div>");
+                htmlAccordionApprove.Append("<ul>");
+                htmlAccordionApprove.Append(string.Format("<li>{0}</li>", "You don't have approved policies"));
+                htmlAccordionApprove.Append("</ul>");
+                htmlAccordionApprove.Append("</div>");
+            }
+
+            foreach (string categ in categoriesListApprove)
+            {
+                List<DataPublishPage> approvepages = ResultApprovePolicies.FindAll(pa => pa.PageCategory == categ);
+                htmlAccordionApprove.Append(string.Format("<h3>{0} ({1})</h3>", categ, approvepages.Count));
+                htmlAccordionApprove.Append("<div>");
+                htmlAccordionApprove.Append("<ul>");
+                foreach (DataPublishPage rr in approvepages)
+                {
+                    htmlAccordionApprove.Append(string.Format("<li><a href='{1}'>{0}</a></li>", rr.PageName, rr.PageURL));
+                }
+                htmlAccordionApprove.Append("</ul>");
+                htmlAccordionApprove.Append("</div>");
+            }
+            htmlAccordionApprove.Append("</div>");
+            LiteralApprovePages.Text = htmlAccordionApprove.ToString();
         }
 
     }

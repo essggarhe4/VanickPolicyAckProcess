@@ -81,7 +81,12 @@ function vanickupdateItemVersion(item) {
     var context = new SP.ClientContext.get_current();
     if (currentPageVersion == '' || currentPageVersion == undefined)
         currentPageVersion = '0';
-    item.set_item("_Version", parseInt(currentPageVersion, 10) + 1);
+    if (IsUpdateVersion) {
+        item.set_item("_Version", parseInt(currentPageVersion, 10) + 1);
+    }
+    else {
+        item.set_item("_Version", parseInt(currentPageVersion, 10));
+    }
     item.update();
     context.executeQueryAsync(Function.createDelegate(this, vanickupdateItemVersionsuccess), Function.createDelegate(this, vanickupdateItemVersionfailed));
 

@@ -41,6 +41,8 @@ namespace VanickPolicyAckProcess.Data
             {
                 public const string PageName = "PAGE_NAME";
                 public const string ApprovalList = "APPROVAL_LIST";
+                public const string PUBLISH_LABEL_APPROVE = "PUBLISH_LABEL_APPROVE";
+                public const string PUBLISH_LABEL_NO_APPROVE = "PUBLISH_LABEL_NO_APPROVE";
             }
         }
 

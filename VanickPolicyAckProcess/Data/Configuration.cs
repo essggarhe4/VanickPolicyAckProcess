@@ -15,6 +15,8 @@ namespace VanickPolicyAckProcess.Data
 
         public string PAGE_NAME { set; get; }
         public string APPROVAL_LIST { set; get; }
+        public string PUBLISH_LABEL_APPROVE { set; get; }
+        public string PUBLISH_LABEL_NO_APPROVE { get; set; }
 
         public Configuration(Guid siteid, Guid webid)
         {            
@@ -52,8 +54,14 @@ namespace VanickPolicyAckProcess.Data
                                 }
                             }
 
+                            this.PUBLISH_LABEL_APPROVE = "";
+                            this.PUBLISH_LABEL_NO_APPROVE = "";
+
                             this.PAGE_NAME = configurationKeys[constants.columns.ConfigurationKeys.PageName];
-                            this.APPROVAL_LIST = configurationKeys[constants.columns.ConfigurationKeys.ApprovalList];                           
+                            this.APPROVAL_LIST = configurationKeys[constants.columns.ConfigurationKeys.ApprovalList];
+                            this.PUBLISH_LABEL_APPROVE = configurationKeys[constants.columns.ConfigurationKeys.PUBLISH_LABEL_APPROVE];
+                            this.PUBLISH_LABEL_NO_APPROVE = configurationKeys[constants.columns.ConfigurationKeys.PUBLISH_LABEL_NO_APPROVE];    
+                    
                         }                        
                     }
                 }

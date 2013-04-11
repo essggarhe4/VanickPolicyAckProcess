@@ -17,6 +17,10 @@ var isAgreeResponse = true;
 var currentApproveDate;
 var currentPageSLA;
 
+var LABELPUBLISH;
+var LABELPUBLISHNOAPPROVE;
+var IsUpdateVersion = false;
+
 var currentsiteurl;
 
 var isCorrectPage;
@@ -113,14 +117,24 @@ function createApproveControls() {
 
     function SetVanickApproveControlEvents() {
         var Button_Request_Appove = $("#vanick-approve-control-button-request-approve");
+        var Button_Request_NO_Appove = $("#vanick-approve-control-button-update");
         var Button_Agree = $("#vanick-approve-control-button-agree");
         var Button_No_Agree = $("#vanick-approve-control-button-no-agree");
 
         Button_Request_Appove.unbind();
         Button_Agree.unbind();
         Button_No_Agree.unbind();
+        Button_Request_NO_Appove.unbind();
 
         Button_Request_Appove.click(function () {
+            IsUpdateVersion = true;
+            SP.UI.ModalDialog.showWaitScreenWithNoClose('Loading...', 'Please wait..', 60, 270);
+            vanickupdateItemVersionInit(currentPageID, currentListName);
+            //Vanickpublish();
+        });
+
+        Button_Request_NO_Appove.click(function () {
+            IsUpdateVersion = false;
             SP.UI.ModalDialog.showWaitScreenWithNoClose('Loading...', 'Please wait..', 60, 270);
             vanickupdateItemVersionInit(currentPageID, currentListName);
             //Vanickpublish();
@@ -159,7 +173,8 @@ function createApproveControls() {
 
         var Approvebuttons = "";
         switch (controlMode) {
-            case "Creator-Draft": Approvebuttons += '<li><a id="vanick-approve-control-button-request-approve" class="ui-tabs-anchor">Publish</a></li>';
+            case "Creator-Draft": Approvebuttons += '<li><a id="vanick-approve-control-button-request-approve" class="ui-tabs-anchor">' + LABELPUBLISH + '</a></li>';
+                                  Approvebuttons += '<li><a id="vanick-approve-control-button-update" class="ui-tabs-anchor">' + LABELPUBLISHNOAPPROVE + '</a></li>';
                 break;
             case "Creator-Approved": Approvebuttons += "";
                 break;

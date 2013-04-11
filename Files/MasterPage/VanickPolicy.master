@@ -76,9 +76,7 @@ document.write('&lt;script type=&quot;text/javascript&quot; src=&quot;/_layouts/
 	<a id="HiddenAnchor" href="javascript:;" style="display:none;"></a>
 	<div class="ribbonbackground">
 		<div class="s4-notdlg top-row">
-			<div class="site-image-title">
-			</div>
-			<div class="s4-trc-container s4-notdlg top-row-elements">
+			<div class="s4-trc-container s4-notdlg top-row-elements" style="position:fixed; top: 0; right: 0;">
 				<SharePoint:DelegateControl runat="server" ControlId="GlobalSiteLink0" __designer:Preview="&lt;span __designer:NonVisual=&quot;true&quot;&gt;&lt;table cellpadding=4 cellspacing=0 style=&quot;font:messagebox;color:buttontext;background-color:buttonface;border: solid 1px;border-top-color:buttonhighlight;border-left-color:buttonhighlight;border-bottom-color:buttonshadow;border-right-color:buttonshadow&quot;&gt;
               &lt;tr&gt;&lt;td nowrap&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;VariationDataSource&lt;/span&gt; - LabelMenuDataSource&lt;/td&gt;&lt;/tr&gt;
               &lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
@@ -167,7 +165,7 @@ function OnSelectionChange(value)
 						&lt;/div&gt;
 					
 				&lt;/div&gt;&lt;ul class=&quot;ms-cui-tts&quot; unselectable=&quot;on&quot; role=&quot;tablist&quot;&gt;&lt;li class=&quot;ms-cui-tt ms-browseTab ms-cui-tt-s&quot; id=&quot;Ribbon.Read-title&quot; unselectable=&quot;on&quot; role=&quot;tab&quot;&gt;&lt;a class=&quot;ms-cui-tt-a&quot; unselectable=&quot;on&quot; href=&quot;javascript:;&quot; onclick=&quot;_ribbonStartInit('Ribbon.Read',false, event);&quot; unselectable=&quot;on&quot; title=&quot;Browse&quot; onkeypress=&quot;if(event != null &amp;&amp; event.keyCode == 13){ if(typeof(_ribbon) != 'undefined') _ribbon.launchedByKeyboard = true; _ribbonStartInit('Ribbon.Read',false, event);  }&quot;&gt;&lt;span class=&quot;ms-cui-tt-span&quot; unselectable=&quot;on&quot;&gt;Browse&lt;/span&gt;&lt;span class=&quot;ms-cui-hidden&quot; unselectable=&quot;on&quot;&gt;Tab 1 of 1.&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div class=&quot;ms-cui-TabRowRight s4-trc-container s4-notdlg&quot; id=&quot;RibbonContainer-TabRowRight&quot; unselectable=&quot;on&quot;&gt;
-					&lt;div id=&quot;s4-searcharea&quot; class=&quot;s4-search s4-rp&quot;&gt;
+					&lt;div id=&quot;s4-searcharea&quot; class=&quot;s4-search s4-rp&quot; style=&quot;display: none;&quot;&gt;
 						
 							&lt;table class=&quot;s4-wpTopTable&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
 	&lt;tr&gt;
@@ -220,7 +218,7 @@ function OnSelectionChange(value)
         options.clientID = 'RibbonContainer';
         options.trimEmptyGroups = true;
         options.dataExtensions = null;
-        options.scalingHint = '-1529141884';
+        options.scalingHint = '-1811294205';
         options.initialTabSelectedByUser = _ribbon.initialTabSelectedByUser;
         options.launchedByKeyboard = _ribbon.launchedByKeyboard;
 
@@ -234,7 +232,7 @@ function OnSelectionChange(value)
         }
 
         g_builder = new CUI.RibbonBuilder(options, document.getElementById('RibbonContainer'), SP.Ribbon.PageManager.get_instance());
-        var dataSource = new CUI.DataSource('\u002fsites\u002fPolicy\u002f_layouts\u002fcommandui.ashx', '292619472', '1033');
+        var dataSource = new CUI.DataSource('\u002fsites\u002fPolicy\u002f_layouts\u002fcommandui.ashx', '-545530114', '1033');
         g_builder.set_dataSource(dataSource);
 
         g_builder.buildRibbonAndInitialTab(_ribbon.initialTabId);
@@ -302,7 +300,7 @@ function OnSelectionChange(value)
             var instance = SP.Ribbon.CommandUIExtensionPageComponent.get_instance();
             instance.set_dataUrl('\u002fsites\u002fPolicy\u002f_layouts\u002fcommandui.ashx');
             instance.set_dataLCID('1033');
-            instance.set_dataVersion('292619472');
+            instance.set_dataVersion('-545530114');
             SP.Ribbon.CommandUIExtensionPageComponent.registerWithPageManager();
         }
         ExecuteOrDelayUntilScriptLoaded(_registerCUIEComponent, &quot;sp.ribbon.js&quot;);
@@ -558,7 +556,7 @@ var g_commandUIHandlers = {&quot;name&quot;:&quot;CommandHandlers&quot;,&quot;at
 						runat="server"
 						Location="TabRowRight"
 						CssClass="s4-trc-container s4-notdlg">
-					<div id="s4-searcharea" class="s4-search s4-rp">
+					<div id="s4-searcharea" class="s4-search s4-rp" style="display: none;">
 						<asp:ContentPlaceHolder id="PlaceHolderSearchArea" runat="server">
 							<SharePoint:DelegateControl runat="server" ControlId="SmallSearchInputBox" Version="4" />
 						</asp:ContentPlaceHolder>
@@ -641,7 +639,7 @@ var g_commandUIHandlers = {&quot;name&quot;:&quot;CommandHandlers&quot;,&quot;at
 								CurrentNodeStyle-CssClass="breadcrumbCurrentNode"
 								RootNodeStyle-CssClass="breadcrumbRootNode"
 								HideInteriorRootNodes="true"
-								SkipLinkText="" __designer:Preview="&lt;span SiteMapProviders=&quot;SPSiteMapProvider,SPXmlContentMapProvider&quot; HideInteriorRootNodes=&quot;true&quot;&gt;&lt;span&gt;&lt;a title=&quot;Root Node&quot; class=&quot;breadcrumbRootNode&quot; Href=&quot;/_vti_bin/Root%20Node%20url&quot;&gt;Root Node&lt;/a&gt;&lt;/span&gt;&lt;span&gt; &amp;gt; &lt;/span&gt;&lt;span&gt;&lt;a title=&quot;Parent Node&quot; class=&quot;breadcrumbNode&quot; Href=&quot;/_vti_bin/Parent%20Nodeurl&quot;&gt;Parent Node&lt;/a&gt;&lt;/span&gt;&lt;span&gt; &amp;gt; &lt;/span&gt;&lt;span class=&quot;breadcrumbCurrentNode&quot;&gt;Current Node&lt;/span&gt;&lt;/span&gt;" __designer:Values="&lt;P N='ID' T='ctl31' /&gt;&lt;P N='SkipLinkText' R='-1' /&gt;&lt;P N='HasAttributes' T='True' /&gt;&lt;P N='Page' ID='1' /&gt;&lt;P N='TemplateControl' ID='2' /&gt;&lt;P N='AppRelativeTemplateSourceDirectory' R='-1' /&gt;" __designer:Templates="&lt;Group Name=&quot;NodeTemplate&quot;&gt;&lt;Template Name=&quot;NodeTemplate&quot; Content=&quot;&quot; /&gt;&lt;/Group&gt;&lt;Group Name=&quot;CurrentNodeTemplate&quot;&gt;&lt;Template Name=&quot;CurrentNodeTemplate&quot; Content=&quot;&quot; /&gt;&lt;/Group&gt;&lt;Group Name=&quot;RootNodeTemplate&quot;&gt;&lt;Template Name=&quot;RootNodeTemplate&quot; Content=&quot;&quot; /&gt;&lt;/Group&gt;&lt;Group Name=&quot;PathSeparatorTemplate&quot;&gt;&lt;Template Name=&quot;PathSeparatorTemplate&quot; Content=&quot;&quot; /&gt;&lt;/Group&gt;"/>
+								SkipLinkText="" __designer:Preview="&lt;span SiteMapProviders=&quot;SPSiteMapProvider,SPXmlContentMapProvider&quot; HideInteriorRootNodes=&quot;true&quot;&gt;&lt;span&gt;&lt;a title=&quot;Root Node&quot; class=&quot;breadcrumbRootNode&quot; Href=&quot;/_vti_bin/Root%20Node%20url&quot;&gt;Root Node&lt;/a&gt;&lt;/span&gt;&lt;span&gt; &amp;gt; &lt;/span&gt;&lt;span&gt;&lt;a title=&quot;Parent Node&quot; class=&quot;breadcrumbNode&quot; Href=&quot;/_vti_bin/Parent%20Nodeurl&quot;&gt;Parent Node&lt;/a&gt;&lt;/span&gt;&lt;span&gt; &amp;gt; &lt;/span&gt;&lt;span class=&quot;breadcrumbCurrentNode&quot;&gt;Current Node&lt;/span&gt;&lt;/span&gt;" __designer:Values="&lt;P N='SkipLinkText' R='-1' /&gt;&lt;P N='HasAttributes' T='True' /&gt;&lt;P N='ID' T='ctl31' /&gt;&lt;P N='Page' ID='1' /&gt;&lt;P N='TemplateControl' ID='2' /&gt;&lt;P N='AppRelativeTemplateSourceDirectory' R='-1' /&gt;" __designer:Templates="&lt;Group Name=&quot;NodeTemplate&quot;&gt;&lt;Template Name=&quot;NodeTemplate&quot; Content=&quot;&quot; /&gt;&lt;/Group&gt;&lt;Group Name=&quot;CurrentNodeTemplate&quot;&gt;&lt;Template Name=&quot;CurrentNodeTemplate&quot; Content=&quot;&quot; /&gt;&lt;/Group&gt;&lt;Group Name=&quot;RootNodeTemplate&quot;&gt;&lt;Template Name=&quot;RootNodeTemplate&quot; Content=&quot;&quot; /&gt;&lt;/Group&gt;&lt;Group Name=&quot;PathSeparatorTemplate&quot;&gt;&lt;Template Name=&quot;PathSeparatorTemplate&quot; Content=&quot;&quot; /&gt;&lt;/Group&gt;"/>
 						</td>
 					</tr>
 					<tr>
@@ -768,7 +766,7 @@ var g_commandUIHandlers = {&quot;name&quot;:&quot;CommandHandlers&quot;,&quot;at
 		<asp:ContentPlaceHolder ID="PlaceHolderMiniConsole" runat="server" />
 	</asp:Panel>
 	<asp:ContentPlaceHolder id="PlaceHolderFormDigest" runat="server">
-		<SharePoint:FormDigest runat="server" __designer:Preview="&lt;input type=&quot;hidden&quot; name=&quot;__REQUESTDIGEST&quot; value=&quot;0x41EE0C3C09B28016D92B36C1D5DFD593631B9DCBFA7E77CF0B275B1A0BB0357EC6FA8D5B07B751E46FD99DDBA73E306F6C74CEBC462C52331A0D7FEC52AE2A85,04 Apr 2013 00:27:50 -0000&quot; /&gt;" __designer:Values="&lt;P N='InDesign' T='False' /&gt;&lt;P N='ID' T='ctl37' /&gt;&lt;P N='Page' ID='1' /&gt;&lt;P N='TemplateControl' ID='2' /&gt;&lt;P N='AppRelativeTemplateSourceDirectory' R='-1' /&gt;"/>
+		<SharePoint:FormDigest runat="server" __designer:Preview="&lt;input type=&quot;hidden&quot; name=&quot;__REQUESTDIGEST&quot; value=&quot;0x17E70160A83F9EB0E66D546699D3320340D86D8F8724B9F52BECF1F5ED7965E6BAC1A2962B05BB122236AD36D513CF447B889559A0D94339550317BEC835B3F4,11 Apr 2013 18:29:52 -0000&quot; /&gt;" __designer:Values="&lt;P N='InDesign' T='False' /&gt;&lt;P N='ID' T='ctl37' /&gt;&lt;P N='Page' ID='1' /&gt;&lt;P N='TemplateControl' ID='2' /&gt;&lt;P N='AppRelativeTemplateSourceDirectory' R='-1' /&gt;"/>
 	</asp:ContentPlaceHolder>
 	</form>
 	<asp:ContentPlaceHolder id="PlaceHolderUtilityContent" runat="server"/>

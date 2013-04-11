@@ -95,8 +95,7 @@
 			<div class="article article-body">
 				<PublishingWebControls:EditModePanel runat="server" CssClass="edit-mode-panel">
 					<SharePointWebControls:TextField runat="server" FieldName="Title" />
-					<SharePointWebControls:DropDownChoiceField runat="server" FieldName="Page Category" />
-					<SharePointWebControls:TextField runat="server" FieldName="Version" />
+					<SharePointWebControls:DropDownChoiceField runat="server" FieldName="Page Category" />					
 					<SharePointWebControls:BooleanField runat="server" FieldName="Notify Status" />
 					<SharePointWebControls:DateTimeField runat="server" FieldName="SLA" />
 					<SharePointWebControls:UserField runat="server" FieldName="Approval Group" />

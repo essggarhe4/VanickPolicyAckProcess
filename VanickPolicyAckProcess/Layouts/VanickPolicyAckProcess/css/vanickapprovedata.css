@@ -1419,3 +1419,12 @@ body .ui-tooltip {
     opacity: 0.3;
     padding: 8px;
 }
+
+
+/*Approve control*/
+
+#vanicktabspending-pending,
+#vanicktabspending-approved
+{
+    width: 90% !important;
+}
