@@ -33,11 +33,21 @@ namespace VanickPolicyAckProcess.TimerJobs
 
         private void CalculateSLA(Guid siteID, Guid webID)
         {
-            Configuration config = new Configuration(siteID, webID);
-            if (!string.IsNullOrEmpty(config.APPROVAL_LIST) && !string.IsNullOrEmpty(config.PAGE_NAME))
+            string globalMessage = string.Empty;
+            try
             {
-                ApproveData AD = new ApproveData(siteID, webID, config.PAGE_NAME, config.APPROVAL_LIST);
-                AD.AnalyzeSLAInformation();
+                Configuration config = new Configuration(siteID, webID);
+                if (!string.IsNullOrEmpty(config.APPROVAL_LIST) && !string.IsNullOrEmpty(config.PAGE_NAME))
+                {
+                    ApproveData AD = new ApproveData(siteID, webID, config.PAGE_NAME, config.APPROVAL_LIST);
+                    AD.AnalyzeSLAInformation();
+                    globalMessage = AD.ApproveMessageError;
+                    Microsoft.Office.Server.Diagnostics.PortalLog.LogString(globalMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Microsoft.Office.Server.Diagnostics.PortalLog.LogString("Vanick send email error: " + ex.Message + " stack trace: " + ex.StackTrace + " Global Messages: " + globalMessage);
             }
         }
 

@@ -180,16 +180,16 @@ function createApproveControls() {
                 break;
             case "Creator-Pending": Approvebuttons += "";
                 break;
-            case "User-Approved": Approvebuttons += '<li><a id="vanick-approve-control-button-agree" class="ui-tabs-anchor">Acknowledge the policy ' + setcurrentPageSLA + '</a></li>';
+            case "User-Approved": Approvebuttons += '<li><a id="vanick-approve-control-button-agree" class="ui-tabs-anchor">Please Acknowledge the policy by Clicking Here. It is  ' + setcurrentPageSLA + '</a></li>';
                 //Approvebuttons += '<li><a id="vanick-approve-control-button-no-agree" class="ui-tabs-anchor">Do not Agree</a></li>';
                 //Approvebuttons += '<li><input id="vanick-approve-control-input-text-comment" class="ui-tabs-anchor" type="text" name="textComment"/></li>';
                 break;
-            case "User-Approved-new-version": Approvebuttons += '<li><a class="ui-tabs-anchor">This policy has been updated recently by author and requires your approval, version: ' + currentPageVersion + '</a></li>';
+            case "User-Approved-new-version": Approvebuttons += '<li><a class="ui-tabs-anchor">This policy was updated recently by author and requires your approval, version: ' + currentPageVersion + '</a></li>';
                 Approvebuttons += '<li><a id="vanick-approve-control-button-agree" class="ui-tabs-anchor">Acknowledge the policy ' + setcurrentPageSLA + '</a></li>';
                 //Approvebuttons += '<li><a id="vanick-approve-control-button-no-agree" class="ui-tabs-anchor">Do not Agree</a></li>';
                 //Approvebuttons += '<li><input id="vanick-approve-control-input-text-comment" class="ui-tabs-anchor" type="text" name="textComment"/></li>';
                 break;
-            case "User-Approved-Agree": Approvebuttons += '<li><span class="ui-tabs-anchor">This policy has been acknowledged by you on ' + currentApproveDate + '</span></li>';
+            case "User-Approved-Agree": Approvebuttons += '<li><span class="ui-tabs-anchor">This policy was acknowledged by you on ' + currentApproveDate + '</span></li>';
                 //Approvebuttons += '<li><span class="ui-tabs-anchor">Message</span></li>';                
                 break;
         }

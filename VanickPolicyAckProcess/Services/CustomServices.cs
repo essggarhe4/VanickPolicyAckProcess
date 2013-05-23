@@ -43,8 +43,10 @@ namespace VanickPolicyAckProcess.Services
                     if(!string.IsNullOrEmpty(UserEmails))
                     {
                     EmailControl emailControl = new EmailControl();
-                    string bodyh = string.Format("You need to approve the policy: <a href='{0}'>{0}</a>", PageURL, PageName);
-                    emailControl.SendEmialInternal(UserEmails, bodyh, "Approve policy");
+
+                    string bodyh = "You have a Policy Pending.</br>Please <a href='http://sharepoint/Pages/Pending.aspx'>Click Here</a> to acknowledge Pending Policies";
+                   // string bodyh = string.Format("You need to approve the policy: <a href='{0}'>{0}</a>", PageURL, PageName);
+                    emailControl.SendEmialInternal(SPContext.Current.Site.ID, SPContext.Current.Site.Zone, SPContext.Current.Web.ID, UserEmails, bodyh, "Approve policy");
                     }
                 }
                 result = true;

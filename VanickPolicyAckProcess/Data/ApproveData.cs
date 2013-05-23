@@ -308,6 +308,7 @@ namespace VanickPolicyAckProcess.Data
 
         public void AnalyzeSLAInformation()
         {
+            this.ApproveMessageError ="Start Trace ";
             List<DataApprove> dataapproveList = new List<DataApprove>();
             List<DataPublishPage> dataPublishPageList = new List<DataPublishPage>();
             List<DataPublishPage> ResultdataPublishPageList = new List<DataPublishPage>();
@@ -340,7 +341,8 @@ namespace VanickPolicyAckProcess.Data
                                     localPolicySupervisor = new SPFieldUserValueCollection(pageItem.Web, pageItem[constants.columns.PageList.PolicySupervisor].ToString());
                                     if (localSharePointGroup[0].User == null)
                                     {
-                                        if (SPContext.Current.Web.Groups.GetByID(localSharePointGroup[0].LookupId) != null)
+                                        this.ApproveMessageError += "Send in Group";
+                                        if (web.Groups.GetByID(localSharePointGroup[0].LookupId) != null)
                                         {
                                             SPList apporoveList = web.Lists[this.approveList];
                                             SPQuery listQuery = new SPQuery();
@@ -349,22 +351,23 @@ namespace VanickPolicyAckProcess.Data
                                             SPListItemCollection cgenericCollection = apporoveList.GetItems(listQuery);
                                             if (cgenericCollection.Count == 0)
                                             {
-                                                string allnames = GetAllNamesinGroup(SPContext.Current.Site.ID, SPContext.Current.Web.ID, localSharePointGroup[0].LookupId);
+                                                string allnames = GetAllNamesinGroup(this.siteID, this.webID, localSharePointGroup[0].LookupId);
                                                 if (!string.IsNullOrEmpty(allnames))
                                                 {
                                                     EmailControl emailControl = new EmailControl();
-                                                    string bodyh = string.Format("The next user {0} has not approve the policy: {1}", allnames, pageItem.Title);
-                                                    emailControl.SendEmialInternal(localPolicySupervisor[0].User.Email, bodyh, "Pending policy");
+                                                    string bodyh = string.Format("User {0} has not acknowledged the policy: {1} by the due date", allnames, pageItem.Title);
+                                                    this.ApproveMessageError += " Before sddn email suvervisor: " + localPolicySupervisor[0].User.Email;
+                                                    emailControl.SendEmialInternal(this.siteID, site.Zone, this.webID, localPolicySupervisor[0].User.Email, bodyh, "Pending policy");
                                                 }
                                             }
                                             else
                                             {
-                                                List<SPUser> usersisgroup = GetUsersInGroup(SPContext.Current.Site.ID, SPContext.Current.Web.ID, localSharePointGroup[0].LookupId);
+                                                List<SPUser> usersisgroup = GetUsersInGroup(this.siteID, this.webID, localSharePointGroup[0].LookupId);
                                                 List<string> readyUserList = new List<string>();
                                                 string NamesNotapprov = string.Empty;
                                                 foreach (SPListItem approveItem in cgenericCollection)
                                                 {
-                                                    SPFieldUserValue userValue = new SPFieldUserValue(SPContext.Current.Web, approveItem["Created By"].ToString());
+                                                    SPFieldUserValue userValue = new SPFieldUserValue(web, approveItem["Created By"].ToString());
                                                     readyUserList.Add(userValue.User.LoginName);
                                                 }
 
@@ -386,8 +389,9 @@ namespace VanickPolicyAckProcess.Data
                                                 if (!string.IsNullOrEmpty(NamesNotapprov))
                                                 {
                                                     EmailControl emailControl = new EmailControl();
-                                                    string bodyh = string.Format("The next user {0} has not approve the policy: {1}", NamesNotapprov, pageItem.Title);
-                                                    emailControl.SendEmialInternal(localPolicySupervisor[0].User.Email, bodyh, "Pending policy");
+                                                    string bodyh = string.Format("User {0} has not acknowledged the policy: {1} by the due date", NamesNotapprov, pageItem.Title);
+                                                    this.ApproveMessageError += " Before sddn email suvervisor: " + localPolicySupervisor[0].User.Email;
+                                                    emailControl.SendEmialInternal(this.siteID, site.Zone, this.webID, localPolicySupervisor[0].User.Email, bodyh, "Pending policy");
                                                 }
                                             }
                                         }

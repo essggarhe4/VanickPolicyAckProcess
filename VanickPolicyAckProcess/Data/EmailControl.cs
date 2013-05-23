@@ -9,18 +9,19 @@ namespace VanickPolicyAckProcess.Data
 {
     public class EmailControl
     {
-        public bool SendEmialInternal(string to, string body, string subject)
+        public bool SendEmialInternal(Guid SiteID, Microsoft.SharePoint.Administration.SPUrlZone zone, Guid WebID, string to, string body, string subject)
         {
+            if (string.IsNullOrEmpty(to) || string.IsNullOrEmpty(body) || string.IsNullOrEmpty(subject))
+                return false;
             try
             {
                 SPSecurity.RunWithElevatedPrivileges(delegate()
                 {
-                    using (SPSite site = new SPSite(SPContext.Current.Site.ID,
-                    SPContext.Current.Site.Zone))
+                    using (SPSite site = new SPSite(SiteID, zone))
                     {
-                        using (SPWeb web = site.OpenWeb(SPContext.Current.Web.ID))
+                        using (SPWeb web = site.OpenWeb(WebID))
                         {
-                            SPUtility.SendEmail(web, true, true, to,
+                            SPUtility.SendEmail(web, true, false, to,
                             subject, body);
                         }
                     }
